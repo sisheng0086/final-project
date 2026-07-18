@@ -7,18 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #070a12;
-            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-dark: #f9fafb;
+            --bg-card: rgba(255, 255, 255, 0.85);
             --primary: #ef4444; /* Neon Crimson Red */
             --primary-glow: rgba(239, 68, 68, 0.35);
             --primary-hover: #dc2626;
+            --text-main: #0f172a;
+            --text-muted: #4b5563;
+            --border: rgba(239, 68, 68, 0.12);
+            --border-hover: rgba(239, 68, 68, 0.35);
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --bg-input: rgba(255, 255, 255, 0.9);
+            --bg-sidebar: rgba(243, 244, 246, 0.96);
+            --bg-chat: rgba(255, 255, 255, 0.6);
+            --bg-bot-bubble: rgba(0, 0, 0, 0.04);
+            --radial-gradient: radial-gradient(circle at top right, #fff0f0 0%, #f9fafb 60%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            --text-color-input: #0f172a;
+        }
+
+        body.dark-theme {
+            --bg-dark: #070a12;
+            --bg-card: rgba(17, 24, 39, 0.7);
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --border: rgba(239, 68, 68, 0.15);
             --border-hover: rgba(239, 68, 68, 0.4);
-            --green: #10b981;
-            --yellow: #f59e0b;
-            --red: #ef4444;
+            --bg-input: rgba(0, 0, 0, 0.4);
+            --bg-sidebar: rgba(10, 15, 26, 0.95);
+            --bg-chat: rgba(15, 23, 42, 0.4);
+            --bg-bot-bubble: rgba(255, 255, 255, 0.05);
+            --radial-gradient: radial-gradient(circle at top right, #1a0b12 0%, #070a12 60%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --text-color-input: #f3f4f6;
         }
 
         * {
@@ -29,12 +52,13 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at top right, #1a0b12 0%, var(--bg-dark) 60%);
+            background: var(--radial-gradient);
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* Scrollbar styling */
@@ -143,11 +167,11 @@
         }
 
         .form-group input, .form-group select {
-            background: rgba(0, 0, 0, 0.4);
+            background: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
-            color: var(--text-main);
+            color: var(--text-color-input);
             font-family: inherit;
             font-size: 0.95rem;
             transition: all 0.3s;
@@ -190,7 +214,7 @@
 
         /* Top Navigation Bar */
         .top-navbar {
-            background: rgba(17, 24, 39, 0.8);
+            background: #090d16; /* Black/Dark theme for navbar in both modes */
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             padding: 15px 30px;
@@ -223,7 +247,7 @@
         }
 
         .nav-link {
-            color: var(--text-muted);
+            color: #9ca3af; /* Light grey text for contrast on black header */
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
@@ -263,6 +287,11 @@
             position: relative;
             cursor: pointer;
             padding: 5px;
+            color: #9ca3af; /* Light grey against black navbar */
+            transition: color 0.3s;
+        }
+        .notification-bell:hover {
+            color: var(--primary);
         }
 
         .notification-bell .bell-icon {
@@ -304,7 +333,7 @@
             border-radius: 50%;
             background: var(--primary);
             color: #000;
-            display: flex;
+            display: none; /* Hidden on login/register */
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
@@ -334,11 +363,11 @@
             right: -450px;
             width: 450px;
             height: 100vh;
-            background: rgba(10, 15, 26, 0.95);
+            background: var(--bg-sidebar);
             backdrop-filter: blur(20px);
             border-left: 1px solid var(--border);
             z-index: 1000;
-            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
             display: flex;
             flex-direction: column;
             box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
@@ -354,7 +383,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(17, 24, 39, 0.8);
+            background: var(--bg-card);
         }
 
         .ai-sidebar-header h3 {
@@ -395,7 +424,7 @@
         }
 
         .chat-bubble.bot {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-bot-bubble);
             align-self: flex-start;
             border-bottom-left-radius: 2px;
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -433,11 +462,11 @@
 
         .chat-input-wrapper input {
             flex-grow: 1;
-            background: rgba(0, 0, 0, 0.3);
+            background: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
-            color: var(--text-main);
+            color: var(--text-color-input);
             font-family: inherit;
         }
 
@@ -930,8 +959,8 @@
         }
 
         .home-course-card {
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 20px;
             cursor: pointer;
@@ -939,14 +968,14 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow);
         }
 
         .home-course-card:hover {
             border-color: var(--primary);
-            background: rgba(239, 68, 68, 0.05);
+            background: rgba(239, 68, 68, 0.08);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.08);
+            box-shadow: 0 8px 25px var(--primary-glow);
         }
 
         .home-course-code {
@@ -967,7 +996,7 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 5px;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid var(--border);
             padding-top: 8px;
             display: flex;
             justify-content: space-between;
@@ -978,6 +1007,9 @@
 
     <!-- AUTHENTICATION SCREEN -->
     <div id="authScreen">
+        <!-- Floating Theme Toggle in Top Right of Auth Screen -->
+        <button id="authThemeToggleBtn" onclick="toggleTheme()" style="position: absolute; top: 25px; right: 25px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 50%; width: 45px; height: 45px; font-size: 1.25rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); color: var(--text-main); transition: all 0.3s; z-index: 10;" title="Toggle Theme">🌙</button>
+        
         <div class="auth-card">
             <div class="auth-logo">
                 <h2>AI-Integrated LMS</h2>
@@ -1054,6 +1086,8 @@
                     <span class="nav-link" onclick="alert('AI-Integrated LMS Help: Contact IT Support Department for issues.')">Help</span>
                 </nav>
                 <div class="nav-actions">
+                    <!-- Light / Dark Mode Toggle Button -->
+                    <button id="themeToggleBtn" onclick="toggleTheme()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; padding: 5px; color: #9ca3af; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; margin-right: 5px;" title="Toggle Light/Dark Theme">☀️</button>
                     <button class="btn-contact" onclick="openTimetableModal()">Contact Lecturer</button>
                     
                     <!-- Notification Bell -->
@@ -1345,12 +1379,43 @@
             { id: 1, sender: "Dr. Ahmad Faisal", message: "Regarding FAISS, it operates using L2 Euclidean distance formulas to check note similarity. Refer to Lecture 2 Slide 2.2." }
         ];
 
+        // THEME STORAGE CHECK (Runs immediately to prevent flicker)
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+
         // STARTUP
         window.onload = () => {
+            const btn = document.getElementById('themeToggleBtn');
+            const authBtn = document.getElementById('authThemeToggleBtn');
+            const isDark = document.body.classList.contains('dark-theme');
+            const icon = isDark ? "☀️" : "🌙";
+            const title = isDark ? "Switch to Light Theme" : "Switch to Dark Theme";
+
+            if (btn) { btn.textContent = icon; btn.title = title; }
+            if (authBtn) { authBtn.textContent = icon; authBtn.title = title; }
+
             updateNotificationList();
             updateTimetableDisplay();
             showDashboardHome();
         };
+
+        // THEME TOGGLE
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggleBtn');
+            const authBtn = document.getElementById('authThemeToggleBtn');
+            body.classList.toggle('dark-theme');
+            
+            const isDark = body.classList.contains('dark-theme');
+            const icon = isDark ? "☀️" : "🌙";
+            const title = isDark ? "Switch to Light Theme" : "Switch to Dark Theme";
+            const storageVal = isDark ? "dark" : "light";
+
+            if (btn) { btn.textContent = icon; btn.title = title; }
+            if (authBtn) { authBtn.textContent = icon; authBtn.title = title; }
+            localStorage.setItem('theme', storageVal);
+        }
 
         // AUTH SYSTEM
         function switchAuthTab(tab) {
@@ -1420,6 +1485,9 @@
             document.getElementById('profileClass').textContent = loggedInUser.class;
             document.getElementById('profilePhone').textContent = loggedInUser.phone;
 
+            // Show AI Bubble
+            document.getElementById('aiBubble').style.display = 'flex';
+
             // Transition Screen
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('mainSystem').style.display = 'flex';
@@ -1429,6 +1497,11 @@
             loggedInUser = null;
             document.getElementById('mainSystem').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
+            
+            // Hide AI Bubble & Close sidebar
+            document.getElementById('aiBubble').style.display = 'none';
+            document.getElementById('aiSidebar').classList.remove('open');
+            
             closeAccountModal();
         }
 
